@@ -1,6 +1,8 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.pages
 
-
+import android.util.Log
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -34,6 +36,7 @@ fun MyApp() {
     AndroidCleanArchitectureBoilerplateTheme {
         val navController = rememberNavController()
         val currentBackStackEntry by navController.currentBackStackEntryAsState()
+        val previousBackStackEntry = navController.previousBackStackEntry
         val currentDestination = currentBackStackEntry?.destination?.route
 
         Scaffold(
@@ -41,7 +44,7 @@ fun MyApp() {
                 TopAppBar(
                     title = { Text(getTitleForDestination(currentDestination)) },
                     navigationIcon = {
-                        if (currentDestination != "home") IconButton(onClick = { navController.popBackStack() }) {
+                        if (previousBackStackEntry != null) IconButton(onClick = { navController.popBackStack() }) {
                             Icon(
                                 imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                                 contentDescription = "Back",
@@ -59,11 +62,13 @@ fun MyApp() {
             NavHost(
                 navController,
                 startDestination = "home",
-                Modifier
-                    .padding(innerPadding)
+                Modifier.padding(innerPadding),
+                enterTransition = { EnterTransition.None },
+                exitTransition = { ExitTransition.None }
             ) {
                 composable("home") { HomeScreen(navController) }
                 composable("details") { DetailsScreen(navController) }
+                composable("setting") { SettingScreen(navController) }
             }
         }
     }
@@ -74,6 +79,7 @@ fun getTitleForDestination(destination: String?): String {
     return when (destination) {
         "home" -> "Home Screen"
         "details" -> "Details Screen"
+        "setting" -> "Setting Screen"
         else -> ""
     }
 }
@@ -85,7 +91,7 @@ fun HomeScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Home Screen Content")
+        Text(text = "Home Screen")
         Button(onClick = { navController.navigate("details") }) {
             Text(text = "Go to Details")
         }
@@ -99,9 +105,20 @@ fun DetailsScreen(navController: NavHostController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Details Screen Content")
-        Button(onClick = { navController.popBackStack() }) {
-            Text(text = "Back to Home")
+        Text(text = "Details Screen")
+        Button(onClick = { navController.navigate("setting") }) {
+            Text(text = "Go to Setting")
         }
+    }
+}
+
+@Composable
+fun SettingScreen(navController: NavHostController) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Setting Screen")
     }
 }
