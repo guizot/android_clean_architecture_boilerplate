@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.core.composeable
+package com.guizot.android_clean_architecture_boilerplate.presentation.core.widget
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons

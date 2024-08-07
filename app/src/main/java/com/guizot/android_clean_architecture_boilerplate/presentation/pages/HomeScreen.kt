@@ -15,7 +15,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.navigation.NavHostController
-import com.guizot.android_clean_architecture_boilerplate.presentation.core.composeable.CustomAppBar
+import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CustomAppBar
 
 @Composable
 fun HomeScreen(navController: NavHostController) {
