@@ -26,17 +26,17 @@ fun CommonItem(
             .padding(bottom = Dp(value = 16.0F))
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.surfaceDim,
+                color = MaterialTheme.colorScheme.surfaceVariant,
                 shape = RoundedCornerShape(16.dp)
             )
-            .padding(all = Dp(value = 16.0F))
+            .padding(20.dp)
     ) {
         Text(
             text = title,
-            fontSize = 18.sp,
+            fontSize = 20.sp,
             fontWeight = FontWeight.Bold
         )
-        Spacer(modifier = Modifier.height(4.dp))
+        Spacer(modifier = Modifier.height(8.dp))
         child()
     }
 }
