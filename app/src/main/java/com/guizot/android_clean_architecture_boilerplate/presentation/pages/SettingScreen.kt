@@ -4,9 +4,7 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -16,7 +14,6 @@ import com.guizot.android_clean_architecture_boilerplate.domain.model.CommonItem
 import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.ChipGroup
 import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CommonItem
 import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CustomAppBar
-
 
 @Composable
 fun SettingScreen(navController: NavHostController) {
