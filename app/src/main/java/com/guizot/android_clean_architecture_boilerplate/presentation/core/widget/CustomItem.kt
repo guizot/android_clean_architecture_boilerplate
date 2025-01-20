@@ -26,7 +26,7 @@ fun CommonItem(
             .padding(bottom = Dp(value = 16.0F))
             .fillMaxWidth()
             .background(
-                color = MaterialTheme.colorScheme.surfaceVariant,
+                color = MaterialTheme.colorScheme.surfaceContainerHighest,
                 shape = RoundedCornerShape(16.dp)
             )
             .padding(20.dp)

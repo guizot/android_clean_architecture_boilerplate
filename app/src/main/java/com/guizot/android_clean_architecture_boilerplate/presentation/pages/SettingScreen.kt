@@ -6,6 +6,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
@@ -17,6 +21,8 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.core.widge
 
 @Composable
 fun SettingScreen(navController: NavHostController) {
+    var selectedChipId by remember { mutableStateOf<Int?>(2) }
+
     Scaffold(
         topBar = { CustomAppBar(navController) }
     ) { innerPadding ->
@@ -29,8 +35,11 @@ fun SettingScreen(navController: NavHostController) {
                             ChipItem(1, "Light"),
                             ChipItem(2, "Dark"),
                             ChipItem(3, "System"),
-                        )
-                    )
+                        ),
+                        selectedChipId
+                    ) {
+                        selectedChipId = it
+                    }
                 }
             ),
         )
