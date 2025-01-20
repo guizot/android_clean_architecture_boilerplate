@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.ui.theme
+package com.guizot.android_clean_architecture_boilerplate.presentation.core.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

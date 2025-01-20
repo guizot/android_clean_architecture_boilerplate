@@ -31,7 +31,7 @@ fun HomeScreen(navController: NavHostController) {
                     Icon(
                         imageVector = Icons.Filled.Settings,
                         contentDescription = "Setting",
-                        tint = MaterialTheme.colorScheme.surface
+                        tint = MaterialTheme.colorScheme.inverseSurface
                     )
                 }
             }

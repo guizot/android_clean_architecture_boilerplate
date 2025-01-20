@@ -37,20 +37,24 @@ fun CustomAppBar(
     val currentDestination = currentBackStackEntry?.destination?.route
 
     TopAppBar(
-        title = { Text(getTitleForDestination(currentDestination)) },
+        title = {
+            Text(
+                getTitleForDestination(currentDestination),
+            )
+        },
         navigationIcon = {
             if (previousBackStackEntry != null) IconButton(onClick = { navController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
-                    tint = MaterialTheme.colorScheme.surface
+                    tint = MaterialTheme.colorScheme.inverseSurface
                 )
             }
         },
         actions = actions,
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
-            titleContentColor = MaterialTheme.colorScheme.surface
+            titleContentColor = MaterialTheme.colorScheme.inverseSurface
         )
     )
 }
