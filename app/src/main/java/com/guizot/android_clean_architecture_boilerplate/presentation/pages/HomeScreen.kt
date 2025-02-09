@@ -19,32 +19,13 @@ import androidx.navigation.NavHostController
 import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CustomAppBar
 
 @Composable
-fun HomeScreen(navController: NavHostController) {
-    Scaffold(
-        topBar = {
-            CustomAppBar(navController) {
-                IconButton(
-                    onClick = {
-                        navController.navigate("setting")
-                    }
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Settings,
-                        contentDescription = "Setting",
-                        tint = MaterialTheme.colorScheme.inverseSurface
-                    )
-                }
-            }
-        }
-    ) { innerPadding ->
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding),
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            Text(text = "Home Screen")
-        }
+fun HomeScreen() {
+    Column(
+        modifier = Modifier
+            .fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(text = "Home Screen")
     }
 }

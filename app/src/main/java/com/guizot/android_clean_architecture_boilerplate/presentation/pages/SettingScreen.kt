@@ -20,39 +20,33 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.core.widge
 import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CustomAppBar
 
 @Composable
-fun SettingScreen(navController: NavHostController) {
+fun SettingScreen() {
     var selectedChipId by remember { mutableStateOf<Int?>(2) }
-
-    Scaffold(
-        topBar = { CustomAppBar(navController) }
-    ) { innerPadding ->
-        val settingItem = arrayOf(
-            CommonItemModel(
-                title = "Theme Mode",
-                child = {
-                    ChipGroup(
-                        listOf(
-                            ChipItem(1, "Light"),
-                            ChipItem(2, "Dark"),
-                            ChipItem(3, "System"),
-                        ),
-                        selectedChipId
-                    ) {
-                        selectedChipId = it
-                    }
+    val settingItem = arrayOf(
+        CommonItemModel(
+            title = "Theme Mode",
+            child = {
+                ChipGroup(
+                    listOf(
+                        ChipItem(1, "Light"),
+                        ChipItem(2, "Dark"),
+                        ChipItem(3, "System"),
+                    ),
+                    selectedChipId
+                ) {
+                    selectedChipId = it
                 }
-            ),
-        )
-        LazyColumn(
-            modifier = Modifier.padding(innerPadding),
-            contentPadding = PaddingValues( all = 16.dp),
-        ) {
-            items(settingItem) { item ->
-                CommonItem(
-                    title = item.title,
-                    child = item.child
-                )
             }
+        ),
+    )
+    LazyColumn(
+        contentPadding = PaddingValues( all = 16.dp),
+    ) {
+        items(settingItem) { item ->
+            CommonItem(
+                title = item.title,
+                child = item.child
+            )
         }
     }
 }
