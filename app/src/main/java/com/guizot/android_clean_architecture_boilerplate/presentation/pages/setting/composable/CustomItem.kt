@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.core.widget
+package com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.composable
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column

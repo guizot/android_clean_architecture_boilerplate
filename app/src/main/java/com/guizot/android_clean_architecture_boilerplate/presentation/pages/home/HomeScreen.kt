@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.pages
+package com.guizot.android_clean_architecture_boilerplate.presentation.pages.home
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

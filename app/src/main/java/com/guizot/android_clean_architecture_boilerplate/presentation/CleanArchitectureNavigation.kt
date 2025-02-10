@@ -7,8 +7,8 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.guizot.android_clean_architecture_boilerplate.presentation.pages.HomeScreen
-import com.guizot.android_clean_architecture_boilerplate.presentation.pages.SettingScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.pages.home.HomeScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.SettingScreen
 
 @Composable
 fun CleanArchitectureNavigation(

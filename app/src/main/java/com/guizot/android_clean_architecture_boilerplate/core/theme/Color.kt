@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.core.theme
+package com.guizot.android_clean_architecture_boilerplate.core.theme
 
 import androidx.compose.ui.graphics.Color
 
