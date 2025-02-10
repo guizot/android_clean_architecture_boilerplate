@@ -1,6 +1,7 @@
 package com.guizot.android_clean_architecture_boilerplate.core.di
 
 import com.guizot.android_clean_architecture_boilerplate.data.source.remote.GithubApiService
+import com.guizot.android_clean_architecture_boilerplate.data.source.remote.interceptor.GithubInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,24 +15,24 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object AppModule {
 
-//    @Provides
-//    @Singleton
-//    fun provideAuthInterceptor(): GithubInterceptor {
-//        return GithubInterceptor()
-//    }
+    @Provides
+    @Singleton
+    fun provideAuthInterceptor(): GithubInterceptor {
+        return GithubInterceptor()
+    }
 
     @Provides
     @Singleton
     fun provideGithubApiService(
-//        githubInterceptor: GithubInterceptor
+        githubInterceptor: GithubInterceptor
     ): GithubApiService {
         return Retrofit.Builder()
             .baseUrl("https://api.github.com/")
-//            .client(
-//                OkHttpClient.Builder()
-//                    .addInterceptor(githubInterceptor)
-//                    .build()
-//            )
+            .client(
+                OkHttpClient.Builder()
+                    .addInterceptor(githubInterceptor)
+                    .build()
+            )
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GithubApiService::class.java)
