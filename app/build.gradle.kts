@@ -25,16 +25,12 @@ android {
     }
 
     buildTypes {
-        debug {
-            // buildConfigField("String", "GITHUB_API_KEY", "\"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\"")
-        }
         release {
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
-            // buildConfigField("String", "GITHUB_API_KEY", "\"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\"")
         }
     }
     compileOptions {
