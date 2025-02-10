@@ -1,7 +1,5 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation
 
-import androidx.compose.animation.EnterTransition
-import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
