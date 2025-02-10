@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GithubInterceptor @Inject constructor() : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder()
-            .addHeader("Authorization", BuildConfig.GITHUB_API_KEY)
+            .addHeader("Authorization", "")
             .build()
         return chain.proceed(request)
     }
