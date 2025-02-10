@@ -55,6 +55,7 @@ fun GetActions(
     return when (destination) {
         CleanArchitectureNavigation.HOME -> HomeActions(currentBackStackEntry, navController)
         CleanArchitectureNavigation.SETTING -> SettingActions(currentBackStackEntry, navController)
+        CleanArchitectureNavigation.GITHUB -> GithubActions(currentBackStackEntry, navController)
         else -> {}
     }
 }
@@ -63,6 +64,7 @@ fun getTitle(destination: String?): String {
     return when (destination) {
         CleanArchitectureNavigation.HOME -> "Home Screen"
         CleanArchitectureNavigation.SETTING -> "Setting Screen"
+        CleanArchitectureNavigation.GITHUB -> "Github List"
         else -> "No Screen"
     }
 }

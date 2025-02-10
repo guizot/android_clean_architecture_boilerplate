@@ -10,9 +10,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
 import com.guizot.android_clean_architecture_boilerplate.presentation.model.ChipItem
-import com.guizot.android_clean_architecture_boilerplate.presentation.model.CommonItemModel
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.model.CommonItemModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.composable.ChipGroup
-import com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.composable.CommonItem
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.composable.CommonItem
 
 @Composable
 fun SettingScreen() {

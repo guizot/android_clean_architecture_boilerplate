@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.model
+package com.guizot.android_clean_architecture_boilerplate.core.presentation.model
 
 import androidx.compose.runtime.Composable
 

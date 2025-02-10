@@ -34,3 +34,11 @@ fun SettingActions(
 ) {
 
 }
+
+@Composable
+fun GithubActions(
+    backStackEntry: NavBackStackEntry,
+    navController: NavHostController
+) {
+
+}

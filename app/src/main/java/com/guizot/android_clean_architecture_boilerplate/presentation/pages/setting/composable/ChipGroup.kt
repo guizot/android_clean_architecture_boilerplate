@@ -36,7 +36,7 @@ fun ChipGroup(
             FilterChip(
                 selected = selectedChipId == chip.id,
                 onClick = {
-                    onChipSelected(chip.id);
+                    onChipSelected(chip.id)
                 },
                 label = {
                     Text(
