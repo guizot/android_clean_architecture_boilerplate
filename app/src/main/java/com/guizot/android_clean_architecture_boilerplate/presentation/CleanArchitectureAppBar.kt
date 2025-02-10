@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.core.widget
+package com.guizot.android_clean_architecture_boilerplate.presentation
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
@@ -12,14 +12,13 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CustomAppBar(
-    navController: NavHostController,
-) {
+fun CleanArchitectureAppBar(navController: NavHostController) {
     val currentBackStackEntry by navController.currentBackStackEntryAsState()
     val previousBackStackEntry = navController.previousBackStackEntry
     val currentDestination = currentBackStackEntry?.destination?.route
@@ -27,7 +26,7 @@ fun CustomAppBar(
     TopAppBar(
         title = {
             Text(
-                getTitleForDestination(currentDestination),
+                getTitle(currentDestination),
             )
         },
         navigationIcon = {
@@ -39,49 +38,32 @@ fun CustomAppBar(
                 )
             }
         },
-        actions = {
-            GetActionForDestination(currentDestination, navController)
-        },
+        actions = { GetActions(currentBackStackEntry, navController) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.inverseSurface
         )
     )
 }
+
+
 @Composable
-fun GetActionForDestination(destination: String?, navController: NavHostController) {
+fun GetActions(
+    currentBackStackEntry: NavBackStackEntry?,
+    navController: NavHostController
+) {
+    val destination = currentBackStackEntry?.destination?.route
     return when (destination) {
-        "home" -> {
-            IconButton(
-                onClick = {
-                    navController.navigate("setting")
-//                    navController.popBackStack()
-//                    navController.navigate("setting") {
-//                        Log.d("GRAPH_ID", navController.graph.route.toString())
-//                        popUpTo(
-//                            navController.graph.id
-//                        ) {
-//                            inclusive = true
-//                        }
-//                    }
-                }
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = "Setting",
-                    tint = MaterialTheme.colorScheme.inverseSurface
-                )
-            }
-        }
+        CleanArchitectureNavigation.HOME -> HomeActions(currentBackStackEntry, navController)
+        CleanArchitectureNavigation.SETTING -> SettingActions(currentBackStackEntry, navController)
         else -> {}
     }
 }
 
-fun getTitleForDestination(destination: String?): String {
+fun getTitle(destination: String?): String {
     return when (destination) {
-        "home" -> "Home Screen"
-        "details" -> "Details Screen"
-        "setting" -> "Setting Screen"
-        else -> ""
+        CleanArchitectureNavigation.HOME -> "Home Screen"
+        CleanArchitectureNavigation.SETTING -> "Setting Screen"
+        else -> "No Screen"
     }
 }

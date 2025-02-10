@@ -1,5 +1,6 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.pages
 
+import android.util.Log
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items

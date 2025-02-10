@@ -11,34 +11,24 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.core.theme
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.guizot.android_clean_architecture_boilerplate.presentation.core.widget.CustomAppBar
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.HomeScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.SettingScreen
 
 @Composable
-fun MyApp() {
+fun CleanArchitectureApp() {
     AndroidCleanArchitectureBoilerplateTheme {
         val navController = rememberNavController()
         Scaffold(
             topBar = {
-                CustomAppBar(navController)
+                CleanArchitectureAppBar(navController)
             }
         ) { innerPadding ->
-            NavHost(
+            CleanArchitectureNavigation(
                 navController,
-                startDestination = "home",
-                enterTransition = { EnterTransition.None},
-                exitTransition = { ExitTransition.None },
-                popEnterTransition = {EnterTransition.None },
-                popExitTransition = { ExitTransition.None },
-                modifier = Modifier
+                Modifier
                     .fillMaxSize()
                     .padding(innerPadding)
-            ) {
-                composable("home") { HomeScreen() }
-                composable("setting") { SettingScreen() }
-            }
+            )
         }
-
     }
 }
