@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.pages.home
+package com.guizot.android_clean_architecture_boilerplate.presentation.home
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize

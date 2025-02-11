@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.composable
+package com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.ExperimentalLayoutApi
@@ -16,7 +16,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.guizot.android_clean_architecture_boilerplate.presentation.model.ChipItem
+import com.guizot.android_clean_architecture_boilerplate.presentation.setting.model.ChipItem
 
 @OptIn(ExperimentalLayoutApi::class)
 @Composable

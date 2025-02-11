@@ -1,5 +1,5 @@
-package com.guizot.android_clean_architecture_boilerplate.domain.model
-data class User(
+package com.guizot.android_clean_architecture_boilerplate.presentation.github.model
+data class UserUi(
     val login: String?,
     val id: Int?,
     val nodeId: String?,

@@ -1,4 +1,4 @@
-package com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting
+package com.guizot.android_clean_architecture_boilerplate.presentation.setting
 
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyColumn
@@ -9,9 +9,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.unit.dp
-import com.guizot.android_clean_architecture_boilerplate.presentation.model.ChipItem
+import com.guizot.android_clean_architecture_boilerplate.presentation.setting.model.ChipItem
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.model.CommonItemModel
-import com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.composable.ChipGroup
+import com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable.ChipGroup
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.composable.CommonItem
 
 @Composable
