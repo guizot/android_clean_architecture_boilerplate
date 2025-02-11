@@ -1,14 +1,11 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.pages.github
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guizot.android_clean_architecture_boilerplate.core.data.NetworkResult
 import com.guizot.android_clean_architecture_boilerplate.domain.model.User
 import com.guizot.android_clean_architecture_boilerplate.domain.usecases.SearchUserUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
