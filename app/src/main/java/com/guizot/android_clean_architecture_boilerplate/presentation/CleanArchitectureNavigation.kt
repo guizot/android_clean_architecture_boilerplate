@@ -4,10 +4,12 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.github.GithubScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.pages.github.GithubViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.home.HomeScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.pages.setting.SettingScreen
 
@@ -33,7 +35,12 @@ fun CleanArchitectureNavigation(
             )
         }
         composable(CleanArchitectureNavigation.SETTING) { SettingScreen() }
-        composable(CleanArchitectureNavigation.GITHUB) { GithubScreen() }
+        composable(CleanArchitectureNavigation.GITHUB) {
+            val viewModel = hiltViewModel<GithubViewModel>()
+            GithubScreen(
+                viewModel = viewModel
+            )
+        }
     }
 }
 

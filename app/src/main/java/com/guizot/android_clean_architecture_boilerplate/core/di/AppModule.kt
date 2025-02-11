@@ -1,7 +1,9 @@
 package com.guizot.android_clean_architecture_boilerplate.core.di
 
-import com.guizot.android_clean_architecture_boilerplate.data.source.remote.GithubApiService
-import com.guizot.android_clean_architecture_boilerplate.data.source.remote.interceptor.GithubInterceptor
+import com.guizot.android_clean_architecture_boilerplate.data.data_source.remote.GithubApiService
+import com.guizot.android_clean_architecture_boilerplate.data.data_source.remote.interceptor.GithubInterceptor
+import com.guizot.android_clean_architecture_boilerplate.data.repositories.GithubRepositoryImpl
+import com.guizot.android_clean_architecture_boilerplate.domain.repositories.GithubRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,7 +19,7 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun provideAuthInterceptor(): GithubInterceptor {
+    fun provideGithubInterceptor(): GithubInterceptor {
         return GithubInterceptor()
     }
 
@@ -36,6 +38,13 @@ object AppModule {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(GithubApiService::class.java)
+    }
+
+    @Provides
+    fun provideGithubRepository(
+        githubApiService: GithubApiService
+    ): GithubRepository {
+        return GithubRepositoryImpl(githubApiService)
     }
 
 }
