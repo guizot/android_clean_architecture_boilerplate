@@ -1,6 +1,5 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation
 
-import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api

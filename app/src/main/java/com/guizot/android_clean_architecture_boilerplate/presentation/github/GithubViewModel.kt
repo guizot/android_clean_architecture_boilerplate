@@ -12,8 +12,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
@@ -23,9 +21,6 @@ import javax.inject.Inject
 class GithubViewModel @Inject constructor(
     private val searchUserUseCase: SearchUserUseCase
 ) : ViewModel() {
-
-    private val _uiState = MutableStateFlow(GithubList.UiState())
-    val uiState: StateFlow<GithubList.UiState> get() = _uiState.asStateFlow()
 
     private val _usersPagingState: MutableStateFlow<PagingData<UserUi>> = MutableStateFlow(value = PagingData.empty())
     val usersPagingState: MutableStateFlow<PagingData<UserUi>> get() = _usersPagingState
@@ -59,48 +54,9 @@ class GithubViewModel @Inject constructor(
             }
     }
 
-//    private fun searchUser() = searchUserUseCase.invoke()
-//        .onEach { result ->
-//            when (result) {
-//                is NetworkResult.Loading -> {
-//                    _uiState.update {
-//                        GithubList.UiState(
-//                            isLoading = true
-//                        )
-//                    }
-//                }
-//
-//                is NetworkResult.Error -> {
-//                    _uiState.update {
-//                        GithubList.UiState(
-//                            isLoading = false,
-//                            error = result.message.toString()
-//                        )
-//                    }
-//
-//                }
-//
-//                is NetworkResult.Success -> {
-//                    result.data?.let { list ->
-//                        _uiState.update {
-//                            GithubList.UiState(
-//                                isLoading = false,
-//                                data = list.toUi()
-//                            )
-//                        }
-//                    }
-//                }
-//            }
-//        }.launchIn(viewModelScope)
-
 }
 
 object GithubList {
-    data class UiState(
-        val isLoading: Boolean = false,
-        val error: String = "",
-        val data: List<UserUi>? = null
-    )
 
     sealed interface Navigation {
         data class GoToDetail(val username: String?) : Navigation
