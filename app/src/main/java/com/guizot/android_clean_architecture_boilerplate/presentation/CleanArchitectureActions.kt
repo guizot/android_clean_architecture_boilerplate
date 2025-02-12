@@ -1,6 +1,7 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -16,7 +17,7 @@ fun HomeActions(
 ) {
     IconButton(
         onClick = {
-            navController.navigate(CleanArchitectureNavigation.SETTING)
+            navController.navigate(Setting)
         }
     ) {
         Icon(
@@ -41,4 +42,22 @@ fun GithubActions(
     navController: NavHostController
 ) {
 
+}
+
+@Composable
+fun GithubDetailActions(
+    backStackEntry: NavBackStackEntry,
+    navController: NavHostController
+) {
+    IconButton(
+        onClick = {
+
+        }
+    ) {
+        Icon(
+            imageVector = Icons.Filled.Favorite,
+            contentDescription = "Setting",
+            tint = MaterialTheme.colorScheme.inverseSurface
+        )
+    }
 }

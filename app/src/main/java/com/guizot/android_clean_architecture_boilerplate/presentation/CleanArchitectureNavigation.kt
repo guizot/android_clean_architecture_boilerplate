@@ -8,10 +8,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.toRoute
+import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubDetailScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubDetailViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.home.HomeScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.SettingScreen
+import kotlinx.serialization.Serializable
 
 @Composable
 fun CleanArchitectureNavigation(
@@ -20,42 +24,64 @@ fun CleanArchitectureNavigation(
 ) {
     NavHost(
         navController,
-        startDestination = CleanArchitectureNavigation.HOME,
+        startDestination = Home,
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() },
         popEnterTransition = { fadeIn() },
         popExitTransition = { fadeOut() },
         modifier = modifier
     ) {
-        composable(CleanArchitectureNavigation.HOME) {
+
+        // MAIN
+        composable<Home> {
             HomeScreen(
                 onClickGithub = {
-                    navController.navigate(CleanArchitectureNavigation.GITHUB)
+                    navController.navigate(GithubList)
                 }
             )
         }
-        composable(CleanArchitectureNavigation.SETTING) { SettingScreen() }
-        composable(CleanArchitectureNavigation.GITHUB) {
+        composable<Setting> { SettingScreen() }
+
+        // GITHUB
+        composable<GithubList> {
             val viewModel = hiltViewModel<GithubViewModel>()
             GithubScreen(
-                viewModel = viewModel
+                viewModel = viewModel,
+            ) {
+                navController.navigate(GithubDetail(username = it))
+            }
+        }
+        composable<GithubDetail> {
+            val viewModel = hiltViewModel<GithubDetailViewModel>()
+            val args = it.toRoute<GithubDetail>()
+            GithubDetailScreen(
+                viewModel = viewModel,
+                username = args.username
             )
         }
+
     }
 }
 
-object CleanArchitectureNavigation {
-    const val HOME = "Home"
-    const val SETTING = "Setting"
-    const val GITHUB = "Github"
+@Serializable
+data object Home {
+    const val ROUTE = "Home"
 }
 
-//@Serializable
-//data object Home {
-//    const val NAME = "Home"
-//}
+@Serializable
+data object Setting {
+    const val ROUTE = "Setting"
+}
 
-//@Serializable
-//data object Setting {
-//    const val NAME = "Setting"
-//}
+@Serializable
+data object GithubList {
+    const val ROUTE = "GithubList"
+}
+
+@Serializable
+data class GithubDetail(val username: String?) {
+    companion object {
+        const val ROUTE = "GithubDetail"
+    }
+}
+

@@ -9,10 +9,13 @@ import com.guizot.android_clean_architecture_boilerplate.domain.mappers.toUi
 import com.guizot.android_clean_architecture_boilerplate.domain.usecases.SearchUserUseCase
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserUi
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -21,22 +24,27 @@ class GithubViewModel @Inject constructor(
     private val searchUserUseCase: SearchUserUseCase
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UserList.UiState())
-    val uiState: StateFlow<UserList.UiState> get() = _uiState.asStateFlow()
+    private val _uiState = MutableStateFlow(GithubList.UiState())
+    val uiState: StateFlow<GithubList.UiState> get() = _uiState.asStateFlow()
 
-    private val _usersState: MutableStateFlow<PagingData<UserUi>> = MutableStateFlow(value = PagingData.empty())
-    val usersState: MutableStateFlow<PagingData<UserUi>> get() = _usersState
+    private val _usersPagingState: MutableStateFlow<PagingData<UserUi>> = MutableStateFlow(value = PagingData.empty())
+    val usersPagingState: MutableStateFlow<PagingData<UserUi>> get() = _usersPagingState
 
+    private val _navigation = Channel<GithubList.Navigation>()
+    val navigation: Flow<GithubList.Navigation> = _navigation.receiveAsFlow()
 
     init {
-        onEvent(UserList.Event.SearchUser)
+        onEvent(GithubList.Event.SearchUser)
     }
 
-    fun onEvent(event: UserList.Event) {
+    fun onEvent(event: GithubList.Event) {
         viewModelScope.launch {
             when (event) {
-                is UserList.Event.SearchUser -> {
+                is GithubList.Event.SearchUser -> {
                     searchUser()
+                }
+                is GithubList.Event.GoToDetail -> {
+                    _navigation.send(GithubList.Navigation.GoToDetail(event.username))
                 }
             }
         }
@@ -47,7 +55,7 @@ class GithubViewModel @Inject constructor(
             .distinctUntilChanged()
             .cachedIn(viewModelScope)
             .collect {
-                _usersState.value = it.map { item -> item.toUi() }
+                _usersPagingState.value = it.map { item -> item.toUi() }
             }
     }
 
@@ -56,7 +64,7 @@ class GithubViewModel @Inject constructor(
 //            when (result) {
 //                is NetworkResult.Loading -> {
 //                    _uiState.update {
-//                        UserList.UiState(
+//                        GithubList.UiState(
 //                            isLoading = true
 //                        )
 //                    }
@@ -64,7 +72,7 @@ class GithubViewModel @Inject constructor(
 //
 //                is NetworkResult.Error -> {
 //                    _uiState.update {
-//                        UserList.UiState(
+//                        GithubList.UiState(
 //                            isLoading = false,
 //                            error = result.message.toString()
 //                        )
@@ -75,7 +83,7 @@ class GithubViewModel @Inject constructor(
 //                is NetworkResult.Success -> {
 //                    result.data?.let { list ->
 //                        _uiState.update {
-//                            UserList.UiState(
+//                            GithubList.UiState(
 //                                isLoading = false,
 //                                data = list.toUi()
 //                            )
@@ -87,15 +95,20 @@ class GithubViewModel @Inject constructor(
 
 }
 
-object UserList {
+object GithubList {
     data class UiState(
         val isLoading: Boolean = false,
         val error: String = "",
         val data: List<UserUi>? = null
     )
 
+    sealed interface Navigation {
+        data class GoToDetail(val username: String?) : Navigation
+    }
+
     sealed interface Event {
         data object SearchUser : Event
+        data class GoToDetail(val username: String?) : Event
     }
 
 }

@@ -1,5 +1,6 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation
 
+import android.util.Log
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -51,20 +52,24 @@ fun GetActions(
     currentBackStackEntry: NavBackStackEntry?,
     navController: NavHostController
 ) {
-    val destination = currentBackStackEntry?.destination?.route
+    val route = currentBackStackEntry?.destination?.route
+    val destination = route?.substringBefore("/")?.substringAfterLast(".")
     return when (destination) {
-        CleanArchitectureNavigation.HOME -> HomeActions(currentBackStackEntry, navController)
-        CleanArchitectureNavigation.SETTING -> SettingActions(currentBackStackEntry, navController)
-        CleanArchitectureNavigation.GITHUB -> GithubActions(currentBackStackEntry, navController)
+        Home.ROUTE -> HomeActions(currentBackStackEntry, navController)
+        Setting.ROUTE -> SettingActions(currentBackStackEntry, navController)
+        GithubList.ROUTE -> GithubActions(currentBackStackEntry, navController)
+        GithubDetail.ROUTE -> GithubDetailActions(currentBackStackEntry, navController)
         else -> {}
     }
 }
 
-fun getTitle(destination: String?): String {
+fun getTitle(route: String?): String {
+    val destination = route?.substringBefore("/")?.substringAfterLast(".")
     return when (destination) {
-        CleanArchitectureNavigation.HOME -> "Home Screen"
-        CleanArchitectureNavigation.SETTING -> "Setting Screen"
-        CleanArchitectureNavigation.GITHUB -> "Github List"
+        Home.ROUTE -> "Home Screen"
+        Setting.ROUTE -> "Setting Screen"
+        GithubList.ROUTE -> "Github List"
+        GithubDetail.ROUTE -> "Github Detail"
         else -> "No Screen"
     }
 }

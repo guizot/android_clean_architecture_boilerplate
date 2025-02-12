@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
@@ -17,27 +18,42 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.scale
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.LocalLifecycleOwner
+import androidx.lifecycle.flowWithLifecycle
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.composable.CommonItem
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserUi
+import kotlinx.coroutines.flow.collectLatest
 
 @Composable
 fun GithubScreen(
     viewModel: GithubViewModel,
+    onClickItem: (username: String?) -> Unit
 ) {
-    val userPagingItems: LazyPagingItems<UserUi> = viewModel.usersState.collectAsLazyPagingItems()
+    val userPagingItems: LazyPagingItems<UserUi> = viewModel.usersPagingState.collectAsLazyPagingItems()
+    val lifecycleOwner = LocalLifecycleOwner.current
+
+    LaunchedEffect(key1 = viewModel.navigation) {
+        viewModel.navigation.flowWithLifecycle(lifecycleOwner.lifecycle)
+            .collectLatest {
+                when(it){
+                    is GithubList.Navigation.GoToDetail -> {
+                        onClickItem(it.username)
+                    }
+                }
+            }
+    }
 
     userPagingItems.apply {
         when (loadState.refresh) {
@@ -89,19 +105,16 @@ fun GithubScreen(
         items(userPagingItems.itemCount) { index ->
             CommonItem(
                 title = userPagingItems[index]?.login.toString(),
+                onClickItem = {
+                    viewModel.onEvent(GithubList.Event.GoToDetail(userPagingItems[index]?.login))
+                },
                 leading = {
-                    Box(
-                        modifier = Modifier
-                            .height(60.dp)
-                            .width(60.dp)
-                    ) {
-                        AsyncImage(
-                            model = userPagingItems[index]?.avatarUrl,
-                            contentDescription = "Avatar",
-                            contentScale = ContentScale.Crop,
-                            modifier = Modifier.clip(CircleShape)
-                        )
-                    }
+                    AsyncImage(
+                        model = userPagingItems[index]?.avatarUrl,
+                        contentDescription = "Avatar",
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier.clip(CircleShape).height(70.dp).width(70.dp)
+                    )
                 },
                 trailing = {
                     Icon(
@@ -115,7 +128,7 @@ fun GithubScreen(
                     Text(
                         text = userPagingItems[index]?.url.toString(),
                         overflow = TextOverflow.Ellipsis,
-                        maxLines = 1
+                        maxLines = 2
                     )
                 }
             )
@@ -139,7 +152,6 @@ fun GithubScreen(
                         )
                     }
                 }
-
                 is LoadState.Error -> {
                     val error = userPagingItems.loadState.append as LoadState.Error
                     item {
