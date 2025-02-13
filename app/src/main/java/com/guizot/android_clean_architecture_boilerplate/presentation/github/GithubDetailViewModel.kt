@@ -1,6 +1,5 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.github
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guizot.android_clean_architecture_boilerplate.core.data.NetworkResult
