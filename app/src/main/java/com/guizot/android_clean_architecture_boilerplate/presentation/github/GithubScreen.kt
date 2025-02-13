@@ -57,20 +57,12 @@ fun GithubScreen(
     userPagingItems.apply {
         when (loadState.refresh) {
             is LoadState.Loading -> {
-                Box (
-                    modifier = Modifier.padding(16.dp),
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
                 ) {
-                    CommonItem(
-                        child = {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                CircularProgressIndicator(
-                                    color = MaterialTheme.colorScheme.inverseSurface
-                                )
-                            }
-                        }
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.inverseSurface
                     )
                 }
             }

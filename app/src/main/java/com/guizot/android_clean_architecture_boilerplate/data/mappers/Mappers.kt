@@ -2,8 +2,10 @@ package com.guizot.android_clean_architecture_boilerplate.data.mappers
 
 import com.guizot.android_clean_architecture_boilerplate.data.model.UserDetailDto
 import com.guizot.android_clean_architecture_boilerplate.data.model.UserDto
+import com.guizot.android_clean_architecture_boilerplate.data.model.UserEntityDto
 import com.guizot.android_clean_architecture_boilerplate.domain.model.User
 import com.guizot.android_clean_architecture_boilerplate.domain.model.UserDetail
+import com.guizot.android_clean_architecture_boilerplate.domain.model.UserEntity
 
 fun List<UserDto>.toDomain() : List<User> = map {
     User(
@@ -65,3 +67,11 @@ fun UserDetailDto.toDomain(): UserDetail {
         updatedAt = this.updatedAt
     )
 }
+
+
+fun UserEntityDto.toDomain() : UserEntity = UserEntity(
+    login = login,
+    id = id,
+    avatarUrl = avatarUrl,
+    url = url,
+)

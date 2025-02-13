@@ -1,8 +1,11 @@
 package com.guizot.android_clean_architecture_boilerplate.domain.mappers
 
+import com.guizot.android_clean_architecture_boilerplate.data.model.UserEntityDto
 import com.guizot.android_clean_architecture_boilerplate.domain.model.User
 import com.guizot.android_clean_architecture_boilerplate.domain.model.UserDetail
+import com.guizot.android_clean_architecture_boilerplate.domain.model.UserEntity
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserDetailUi
+import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserEntityUi
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserUi
 
 fun List<User>.toUi() : List<UserUi> = map {
@@ -125,3 +128,18 @@ fun UserDetail.toList(): List<Pair<String, Any?>> {
         "updatedAt" to updatedAt
     )
 }
+
+
+fun UserEntity.toDto() : UserEntityDto = UserEntityDto(
+    login = login,
+    id = id,
+    avatarUrl = avatarUrl,
+    url = url,
+)
+
+fun UserEntity.toUi() : UserEntityUi = UserEntityUi(
+    login = login,
+    id = id,
+    avatarUrl = avatarUrl,
+    url = url,
+)

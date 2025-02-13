@@ -11,6 +11,8 @@ import androidx.navigation.compose.composable
 import androidx.navigation.toRoute
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubDetailScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubDetailViewModel
+import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubFavoriteScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubFavoriteViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.home.HomeScreen
@@ -59,6 +61,14 @@ fun CleanArchitectureNavigation(
                 username = args.username
             )
         }
+        composable<GithubFavorite> {
+            val viewModel = hiltViewModel<GithubFavoriteViewModel>()
+            GithubFavoriteScreen(
+                viewModel = viewModel,
+            ) {
+                navController.navigate(GithubDetail(username = it))
+            }
+        }
 
     }
 }
@@ -85,3 +95,7 @@ data class GithubDetail(val username: String?) {
     }
 }
 
+@Serializable
+data object GithubFavorite {
+    const val ROUTE = "GithubFavorite"
+}

@@ -58,6 +58,7 @@ fun GetActions(
         Setting.ROUTE -> SettingActions(currentBackStackEntry, navController)
         GithubList.ROUTE -> GithubActions(currentBackStackEntry, navController)
         GithubDetail.ROUTE -> GithubDetailActions(currentBackStackEntry, navController)
+        GithubFavorite.ROUTE -> GithubFavoriteActions(currentBackStackEntry, navController)
         else -> {}
     }
 }
@@ -69,6 +70,7 @@ fun getTitle(route: String?): String {
         Setting.ROUTE -> "Setting Screen"
         GithubList.ROUTE -> "Github List"
         GithubDetail.ROUTE -> "Github Detail"
+        GithubFavorite.ROUTE -> "Github Favorite"
         else -> "No Screen"
     }
 }

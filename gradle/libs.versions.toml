@@ -18,6 +18,7 @@ slf4jSimple = "1.7.30"
 retrofit = "2.9.0"
 paging = "3.3.5"
 coilCompose = "2.5.0"
+room = "2.6.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -64,6 +65,11 @@ paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pag
 
 # Coil
 coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+
+# Room
+room = { module = "androidx.room:room-runtime", version.ref = "room" }
+room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
