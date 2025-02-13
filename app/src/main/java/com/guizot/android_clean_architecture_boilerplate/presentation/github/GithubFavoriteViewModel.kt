@@ -1,17 +1,10 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.github
 
-import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.paging.PagingData
-import androidx.paging.cachedIn
-import androidx.paging.map
 import com.guizot.android_clean_architecture_boilerplate.domain.mappers.toUi
 import com.guizot.android_clean_architecture_boilerplate.domain.usecases.GetAllUserLocalUseCase
-import com.guizot.android_clean_architecture_boilerplate.domain.usecases.SearchUserUseCase
-import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserDetailUi
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserEntityUi
-import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserUi
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -19,7 +12,6 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
