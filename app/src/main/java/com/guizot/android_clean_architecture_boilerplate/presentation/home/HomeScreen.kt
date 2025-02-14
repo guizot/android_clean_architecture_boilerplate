@@ -35,7 +35,7 @@ fun HomeScreen(
                 )
             },
             child = {
-                Text(text = "list of favorite github users using retrofit, room & hilt")
+                Text(text = "list of favorite github users using retrofit, paging, room & hilt")
             }
         )
     }
