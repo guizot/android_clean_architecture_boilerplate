@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.sp
 fun CommonItem(
     title: String? = null,
     color: Color = MaterialTheme.colorScheme.surfaceContainerHighest,
-    onClickItem: () -> Unit = {},
+    onClickItem: (() -> Unit)? = null,
     leading: (@Composable () -> Unit)? = null,
     trailing: (@Composable () -> Unit)? = null,
     child: @Composable () -> Unit = {},
@@ -41,7 +41,11 @@ fun CommonItem(
                 shape = RoundedCornerShape(16.dp)
             )
             .clip(RoundedCornerShape(16.dp))
-            .clickable { onClickItem() }
+            .clickable(enabled = onClickItem != null) {
+                if (onClickItem != null) {
+                    onClickItem()
+                }
+            }
             .padding(20.dp)
     ) {
         leading?.let { it ->

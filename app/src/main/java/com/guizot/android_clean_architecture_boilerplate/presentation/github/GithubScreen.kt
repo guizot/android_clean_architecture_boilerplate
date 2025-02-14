@@ -1,6 +1,7 @@
 package com.guizot.android_clean_architecture_boilerplate.presentation.github
 
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -9,18 +10,16 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListState
-import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.KeyboardArrowRight
+import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -57,40 +56,6 @@ fun GithubScreen(
             }
     }
 
-    userPagingItems.apply {
-        when (loadState.refresh) {
-            is LoadState.Loading -> {
-                Box(
-                    modifier = Modifier.fillMaxSize(),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(
-                        color = MaterialTheme.colorScheme.inverseSurface
-                    )
-                }
-            }
-
-            is LoadState.Error -> {
-                val error = userPagingItems.loadState.refresh as LoadState.Error
-                Box (
-                    modifier = Modifier.padding(16.dp),
-                ) {
-                    CommonItem(
-                        child = {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                Text(text = error.error.message.toString())
-                            }
-                        }
-                    )
-                }
-            }
-            is LoadState.NotLoading -> Box( modifier = Modifier )
-        }
-    }
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize(),
@@ -107,7 +72,10 @@ fun GithubScreen(
                         model = userPagingItems[index]?.avatarUrl,
                         contentDescription = "Avatar",
                         contentScale = ContentScale.Crop,
-                        modifier = Modifier.clip(CircleShape).height(70.dp).width(70.dp)
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .height(70.dp)
+                            .width(70.dp)
                     )
                 },
                 trailing = {
@@ -152,7 +120,20 @@ fun GithubScreen(
                         CommonItem(
                             title = "Error",
                             child = {
-                                Text(text = error.error.message.toString())
+                                Column {
+                                    Text(text = error.error.message.toString())
+                                    Spacer(modifier = Modifier.height(16.dp))
+                                    Button(
+                                        modifier = Modifier
+                                            .fillMaxWidth(),
+                                        onClick = { userPagingItems.retry() }
+                                    ) {
+                                        Text(
+                                            text = "Retry",
+                                            color = MaterialTheme.colorScheme.inverseSurface
+                                        )
+                                    }
+                                }
                             }
                         )
                     }
@@ -161,5 +142,48 @@ fun GithubScreen(
             }
         }
     }
+
+    userPagingItems.apply {
+        when (loadState.refresh) {
+            is LoadState.Loading -> {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    CircularProgressIndicator(
+                        color = MaterialTheme.colorScheme.inverseSurface
+                    )
+                }
+            }
+            is LoadState.Error -> {
+                val error = userPagingItems.loadState.refresh as LoadState.Error
+                Box (
+                    modifier = Modifier.padding(16.dp),
+                ) {
+                    CommonItem(
+                        title = "Error",
+                        child = {
+                            Column {
+                                Text(text = error.error.message.toString())
+                                Spacer(modifier = Modifier.height(16.dp))
+                                Button(
+                                    modifier = Modifier
+                                        .fillMaxWidth(),
+                                    onClick = { userPagingItems.retry() }
+                                ) {
+                                    Text(
+                                        text = "Retry",
+                                        color = MaterialTheme.colorScheme.inverseSurface
+                                    )
+                                }
+                            }
+                        }
+                    )
+                }
+            }
+            is LoadState.NotLoading -> Box( modifier = Modifier )
+        }
+    }
+
 
 }
