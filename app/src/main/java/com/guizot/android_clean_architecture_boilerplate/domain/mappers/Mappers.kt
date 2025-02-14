@@ -7,6 +7,7 @@ import com.guizot.android_clean_architecture_boilerplate.domain.model.UserEntity
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserDetailUi
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserEntityUi
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.model.UserUi
+import java.util.Date
 
 fun List<User>.toUi() : List<UserUi> = map {
     UserUi(
@@ -135,6 +136,7 @@ fun UserEntity.toDto() : UserEntityDto = UserEntityDto(
     id = id,
     avatarUrl = avatarUrl,
     url = url,
+    createdAt = Date().time
 )
 
 fun UserEntity.toUi() : UserEntityUi = UserEntityUi(

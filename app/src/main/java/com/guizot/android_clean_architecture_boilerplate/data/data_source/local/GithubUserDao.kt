@@ -18,7 +18,7 @@ interface GithubUserDao {
     @Delete
     suspend fun deleteUser(recipe: UserEntityDto)
 
-    @Query("SELECT * FROM UserEntityDto")
+    @Query("SELECT * FROM UserEntityDto ORDER BY createdAt DESC")
     fun getAllUsers(): Flow<List<UserEntityDto>>
 
     @Query("SELECT * FROM UserEntityDto WHERE login = :login LIMIT 1")

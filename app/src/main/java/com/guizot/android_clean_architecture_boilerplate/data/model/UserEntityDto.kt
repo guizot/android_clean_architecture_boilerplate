@@ -9,4 +9,5 @@ data class UserEntityDto(
     val login: String,
     val avatarUrl: String,
     val url: String,
+    val createdAt: Long
 )
