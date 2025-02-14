@@ -53,7 +53,7 @@ fun GithubActions(
         }
     ) {
         Icon(
-            imageVector = Icons.AutoMirrored.Filled.List,
+            imageVector = Icons.Filled.Favorite,
             contentDescription = "Setting",
             tint = MaterialTheme.colorScheme.inverseSurface
         )

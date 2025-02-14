@@ -20,7 +20,7 @@ class GithubRepositoryImpl(
     private val githubUserDao: GithubUserDao
 ) : GithubRepository {
 
-    override suspend fun searchUser(): Flow<PagingData<User>> {
+    override fun searchUser(): Flow<PagingData<User>> {
         return Pager(
             config = PagingConfig(pageSize = 1000, prefetchDistance = 2),
             pagingSourceFactory = {

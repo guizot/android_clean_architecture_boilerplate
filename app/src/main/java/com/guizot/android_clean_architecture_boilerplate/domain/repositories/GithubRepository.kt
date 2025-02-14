@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 interface GithubRepository {
 
     // REMOTE
-    suspend fun searchUser(): Flow<PagingData<User>>
+    fun searchUser(): Flow<PagingData<User>>
     suspend fun detailUser(username: String): Result<UserDetail>
 
     // LOCAL

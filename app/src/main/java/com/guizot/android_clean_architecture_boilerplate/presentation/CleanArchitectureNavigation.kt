@@ -21,11 +21,11 @@ import kotlinx.serialization.Serializable
 
 @Composable
 fun CleanArchitectureNavigation(
-    navController: NavHostController,
+    navHostController: NavHostController,
     modifier: Modifier
 ) {
     NavHost(
-        navController,
+        navHostController,
         startDestination = Home,
         enterTransition = { fadeIn() },
         exitTransition = { fadeOut() },
@@ -38,7 +38,7 @@ fun CleanArchitectureNavigation(
         composable<Home> {
             HomeScreen(
                 onClickGithub = {
-                    navController.navigate(GithubList)
+                    navHostController.navigate(GithubList)
                 }
             )
         }
@@ -50,7 +50,7 @@ fun CleanArchitectureNavigation(
             GithubScreen(
                 viewModel = viewModel,
             ) {
-                navController.navigate(GithubDetail(username = it))
+                navHostController.navigate(GithubDetail(username = it))
             }
         }
         composable<GithubDetail> {
@@ -66,7 +66,7 @@ fun CleanArchitectureNavigation(
             GithubFavoriteScreen(
                 viewModel = viewModel,
             ) {
-                navController.navigate(GithubDetail(username = it))
+                navHostController.navigate(GithubDetail(username = it))
             }
         }
 

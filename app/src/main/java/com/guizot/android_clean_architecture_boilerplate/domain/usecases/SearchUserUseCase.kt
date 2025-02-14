@@ -8,7 +8,7 @@ import javax.inject.Inject
 
 class SearchUserUseCase @Inject constructor(private val githubRepository: GithubRepository) {
 
-    suspend fun invoke(): Flow<PagingData<User>> {
+    fun invoke(): Flow<PagingData<User>> {
         return githubRepository.searchUser()
     }
 

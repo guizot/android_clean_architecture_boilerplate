@@ -11,14 +11,14 @@ import androidx.navigation.compose.rememberNavController
 @Composable
 fun CleanArchitectureApp() {
     AndroidCleanArchitectureBoilerplateTheme {
-        val navController = rememberNavController()
+        val navHostController = rememberNavController()
         Scaffold(
             topBar = {
-                CleanArchitectureAppBar(navController)
+                CleanArchitectureAppBar(navHostController)
             }
         ) { innerPadding ->
             CleanArchitectureNavigation(
-                navController,
+                navHostController,
                 Modifier
                     .fillMaxSize()
                     .padding(innerPadding)

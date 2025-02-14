@@ -17,9 +17,9 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CleanArchitectureAppBar(navController: NavHostController) {
-    val currentBackStackEntry by navController.currentBackStackEntryAsState()
-    val previousBackStackEntry = navController.previousBackStackEntry
+fun CleanArchitectureAppBar(navHostController: NavHostController) {
+    val currentBackStackEntry by navHostController.currentBackStackEntryAsState()
+    val previousBackStackEntry = navHostController.previousBackStackEntry
     val currentDestination = currentBackStackEntry?.destination?.route
 
     TopAppBar(
@@ -29,7 +29,7 @@ fun CleanArchitectureAppBar(navController: NavHostController) {
             )
         },
         navigationIcon = {
-            if (previousBackStackEntry != null) IconButton(onClick = { navController.popBackStack() }) {
+            if (previousBackStackEntry != null) IconButton(onClick = { navHostController.popBackStack() }) {
                 Icon(
                     imageVector = Icons.AutoMirrored.Filled.ArrowBack,
                     contentDescription = "Back",
@@ -37,7 +37,7 @@ fun CleanArchitectureAppBar(navController: NavHostController) {
                 )
             }
         },
-        actions = { GetActions(currentBackStackEntry, navController) },
+        actions = { GetActions(currentBackStackEntry, navHostController) },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.primary,
             titleContentColor = MaterialTheme.colorScheme.inverseSurface

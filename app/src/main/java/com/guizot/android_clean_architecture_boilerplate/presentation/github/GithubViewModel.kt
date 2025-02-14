@@ -13,45 +13,33 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class GithubViewModel @Inject constructor(
-    private val searchUserUseCase: SearchUserUseCase
+    searchUserUseCase: SearchUserUseCase
 ) : ViewModel() {
 
-    private val _usersPagingState: MutableStateFlow<PagingData<UserUi>> = MutableStateFlow(value = PagingData.empty())
-    val usersPagingState: MutableStateFlow<PagingData<UserUi>> get() = _usersPagingState
+    private val _usersPagingState: Flow<PagingData<UserUi>> = searchUserUseCase.invoke()
+        .map { pagingData -> pagingData.map { it.toUi() } }
+        .distinctUntilChanged()
+        .cachedIn(viewModelScope)
+    val usersPagingState: Flow<PagingData<UserUi>> get() = _usersPagingState
 
     private val _navigation = Channel<GithubList.Navigation>()
     val navigation: Flow<GithubList.Navigation> = _navigation.receiveAsFlow()
 
-    init {
-        onEvent(GithubList.Event.SearchUser)
-    }
-
     fun onEvent(event: GithubList.Event) {
         viewModelScope.launch {
             when (event) {
-                is GithubList.Event.SearchUser -> {
-                    searchUser()
-                }
                 is GithubList.Event.GoToDetail -> {
                     _navigation.send(GithubList.Navigation.GoToDetail(event.username))
                 }
             }
         }
-    }
-
-    private suspend fun searchUser() {
-        searchUserUseCase.invoke()
-            .distinctUntilChanged()
-            .cachedIn(viewModelScope)
-            .collect {
-                _usersPagingState.value = it.map { item -> item.toUi() }
-            }
     }
 
 }
@@ -63,7 +51,6 @@ object GithubList {
     }
 
     sealed interface Event {
-        data object SearchUser : Event
         data class GoToDetail(val username: String?) : Event
     }
 
