@@ -9,30 +9,32 @@ import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable.AccentOption
 
-private val DarkColorScheme = darkColorScheme(
-    primary = Blue40,
-)
-
-private val LightColorScheme = lightColorScheme(
-    primary = Blue80,
-)
 
 @Composable
 fun AndroidCleanArchitectureBoilerplateTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
-    // Dynamic color is available on Android 12+
+    appTheme: AppTheme = AppTheme.SYSTEM,
+    appAccent: AppAccent = AppAccent.BLUE,
     dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
+
+    val colorAccent = AccentOption.defaultOptions().first { it.value == appAccent }
+
+    val isDark = when (appTheme) {
+        AppTheme.LIGHT  -> false
+        AppTheme.DARK   -> true
+        AppTheme.SYSTEM -> isSystemInDarkTheme()
+    }
+
     val colorScheme = when {
         dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (isDark) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
-
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
+        isDark -> darkColorScheme( primary = colorAccent.darkColor )
+        else   -> lightColorScheme( primary = colorAccent.lightColor )
     }
 
     MaterialTheme(
