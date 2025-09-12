@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.guizot.android_clean_architecture_boilerplate"
-    compileSdk = 34
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.guizot.android_clean_architecture_boilerplate"
@@ -101,6 +101,9 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.paging)
     ksp(libs.room.compiler)
+
+    // DataStore
+    implementation(libs.androidx.datastore.preferences)
 
     // Testing
     testImplementation(libs.junit)
