@@ -5,9 +5,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -15,10 +13,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.model.ChipItem
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.model.CommonItemModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable.ChipGroup
@@ -31,9 +27,9 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.setting.co
 
 @Composable
 fun SettingScreen(
-    vm: SettingsViewModel = hiltViewModel()
+    viewModel: SettingsViewModel
 ) {
-    val state by vm.ui.collectAsState()
+    val state by viewModel.ui.collectAsState()
 
     // ----- Theme chips mapping -----
     fun toChipId(t: AppTheme): Int = when (t) {
@@ -104,7 +100,7 @@ fun SettingScreen(
                     selectedThemeChipId
                 ) { id ->
                     selectedThemeChipId = id
-                    vm.onThemeSelected(toTheme(id))
+                    viewModel.onThemeSelected(toTheme(id))
                 }
             }
         ),
@@ -118,7 +114,7 @@ fun SettingScreen(
                 ) { id ->
                     selectedAccentId = id
                     val chosen = AccentOption.defaultOptions().firstOrNull { it.id == id }?.value ?: AppAccent.BLUE
-                    vm.onAccentSelected(chosen)
+                    viewModel.onAccentSelected(chosen)
                 }
             }
         ),
@@ -136,7 +132,7 @@ fun SettingScreen(
                     selectedFontId
                 ) { id ->
                     selectedFontId = id
-                    vm.onFontSelected(toFont(id))
+                    viewModel.onFontSelected(toFont(id))
                 }
             }
         ),

@@ -4,7 +4,7 @@ import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -17,6 +17,7 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.github.Git
 import com.guizot.android_clean_architecture_boilerplate.presentation.github.GithubViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.home.HomeScreen
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.SettingScreen
+import com.guizot.android_clean_architecture_boilerplate.presentation.setting.SettingsViewModel
 import kotlinx.serialization.Serializable
 
 @Composable
@@ -42,7 +43,12 @@ fun CleanArchitectureNavigation(
                 }
             )
         }
-        composable<Setting> { SettingScreen() }
+        composable<Setting> {
+            val viewModel = hiltViewModel<SettingsViewModel>()
+            SettingScreen(
+                viewModel = viewModel,
+            )
+        }
 
         // GITHUB
         composable<GithubList> {

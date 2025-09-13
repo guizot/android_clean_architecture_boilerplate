@@ -17,7 +17,7 @@ class PrettyLogger(private val tag: String = "Network") : HttpLoggingInterceptor
                     .toJson(jsonElement)
                 Log.d(tag, prettyJson)
             } catch (e: JsonSyntaxException) {
-                Log.d(tag, message)  // fallback if not valid JSON
+                Log.d(tag, e.message ?: "")  // fallback if not valid JSON
             }
         } else {
             Log.d(tag, message)
