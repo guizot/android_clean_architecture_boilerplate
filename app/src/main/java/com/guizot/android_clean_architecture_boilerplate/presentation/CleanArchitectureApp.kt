@@ -12,15 +12,21 @@ import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme
 import com.guizot.android_clean_architecture_boilerplate.domain.usecases.ThemeSettingsUseCase
 import androidx.compose.runtime.getValue
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppAccent
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppFont
 
 @Composable
 fun CleanArchitectureApp(
-    themeUC: ThemeSettingsUseCase
+    themeSettingsUseCase: ThemeSettingsUseCase
 ) {
-    val appTheme by themeUC.observeTheme().collectAsState(initial = AppTheme.SYSTEM)
-    val appAccent by themeUC.observeAccent().collectAsState(initial = AppAccent.BLUE)
+    val appTheme by themeSettingsUseCase.observeTheme().collectAsState(initial = AppTheme.SYSTEM)
+    val appAccent by themeSettingsUseCase.observeAccent().collectAsState(initial = AppAccent.BLUE)
+    val appFont  by themeSettingsUseCase.observeFont().collectAsState(initial = AppFont.DEFAULT) // NEW
 
-    AndroidCleanArchitectureBoilerplateTheme(appTheme = appTheme, appAccent = appAccent) {
+    AndroidCleanArchitectureBoilerplateTheme(
+        appTheme = appTheme,
+        appAccent = appAccent,
+        appFont = appFont,                 // NEW
+    ) {
         val navHostController = rememberNavController()
         Scaffold(
             topBar = { CleanArchitectureAppBar(navHostController) }

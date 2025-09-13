@@ -17,7 +17,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.model.ChipItem
@@ -26,6 +25,7 @@ import com.guizot.android_clean_architecture_boilerplate.presentation.setting.co
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.composable.CommonItem
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppTheme
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppAccent
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppFont
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable.AccentOption
 import com.guizot.android_clean_architecture_boilerplate.presentation.setting.composable.AccentSwatchRow
 
@@ -46,6 +46,7 @@ fun SettingScreen(
         2 -> AppTheme.DARK
         else -> AppTheme.SYSTEM
     }
+
     val systemDark = isSystemInDarkTheme()
     val isDark = when (state.selectedTheme) {
         AppTheme.LIGHT  -> false
@@ -59,7 +60,6 @@ fun SettingScreen(
     }
 
     // ----- Accent swatches mapping -----
-
     fun toAccentId(a: AppAccent): Int = when (a) {
         AppAccent.GREEN  -> 1
         AppAccent.BLUE   -> 2
@@ -67,10 +67,27 @@ fun SettingScreen(
         AppAccent.AMBER  -> 4
         AppAccent.RED    -> 5
     }
-
     var selectedAccentId by remember { mutableStateOf<Int?>(toAccentId(state.selectedAccent)) }
     LaunchedEffect(state.selectedAccent) {
         selectedAccentId = toAccentId(state.selectedAccent)
+    }
+
+    // ----- Font chips mapping (NEW) -----
+    fun toFontId(f: AppFont): Int = when (f) {
+        AppFont.DEFAULT     -> 1
+        AppFont.SANS_SERIF -> 2
+        AppFont.SERIF      -> 3
+        AppFont.MONOSPACE  -> 4
+    }
+    fun toFont(id: Int): AppFont = when (id) {
+        2 -> AppFont.SANS_SERIF
+        3 -> AppFont.SERIF
+        4 -> AppFont.MONOSPACE
+        else -> AppFont.DEFAULT
+    }
+    var selectedFontId by remember { mutableStateOf<Int?>(toFontId(state.selectedFont)) }
+    LaunchedEffect(state.selectedFont) {
+        selectedFontId = toFontId(state.selectedFont)
     }
 
     // ----- Items -----
@@ -94,15 +111,32 @@ fun SettingScreen(
         CommonItemModel(
             title = "Accent Color",
             child = {
-                // Follow your loading behavior: render the row but keep selection empty until loaded.
                 AccentSwatchRow(
-                    selectedId = if (state.isSaving) selectedAccentId else selectedAccentId, // same behavior; you can disable clicks during saving
+                    selectedId = selectedAccentId,
                     enabled = !state.isSaving,
                     isDark = isDark
                 ) { id ->
                     selectedAccentId = id
                     val chosen = AccentOption.defaultOptions().firstOrNull { it.id == id }?.value ?: AppAccent.BLUE
                     vm.onAccentSelected(chosen)
+                }
+            }
+        ),
+        // -------- NEW: App Font picker --------
+        CommonItemModel(
+            title = "App Font",
+            child = {
+                ChipGroup(
+                    listOf(
+                        ChipItem(1, "System"),
+                        ChipItem(2, "Sans Serif"),
+                        ChipItem(3, "Serif"),
+                        ChipItem(4, "Monospace"),
+                    ),
+                    selectedFontId
+                ) { id ->
+                    selectedFontId = id
+                    vm.onFontSelected(toFont(id))
                 }
             }
         ),
@@ -119,14 +153,14 @@ fun SettingScreen(
                 child = {
                     Box(modifier = Modifier.fillMaxWidth()) {
                         item.child()
-                        if (state.isSaving) {
-                            CircularProgressIndicator(
-                                modifier = Modifier
-                                    .align(Alignment.CenterEnd)
-                                    .size(18.dp),
-                                strokeWidth = 2.dp
-                            )
-                        }
+//                        if (state.isSaving) {
+//                            CircularProgressIndicator(
+//                                modifier = Modifier
+//                                    .align(Alignment.CenterEnd)
+//                                    .size(18.dp),
+//                                strokeWidth = 2.dp
+//                            )
+//                        }
                     }
                 }
             )

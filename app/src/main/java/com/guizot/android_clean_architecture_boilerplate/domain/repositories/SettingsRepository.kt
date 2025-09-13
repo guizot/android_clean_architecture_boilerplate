@@ -2,6 +2,7 @@ package com.guizot.android_clean_architecture_boilerplate.domain.repositories
 
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppTheme
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppAccent
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppFont
 import kotlinx.coroutines.flow.Flow
 
 interface SettingsRepository {
@@ -14,4 +15,9 @@ interface SettingsRepository {
     fun observeAccent(): Flow<AppAccent>
     suspend fun setAccent(accent: AppAccent)
     suspend fun getAccent(): AppAccent
+
+    // Font (new)
+    fun observeFont(): Flow<AppFont>
+    suspend fun setFont(font: AppFont)
+    suspend fun getFont(): AppFont
 }

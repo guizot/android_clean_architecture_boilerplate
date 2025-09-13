@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppTheme
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppAccent
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppFont
 import com.guizot.android_clean_architecture_boilerplate.domain.usecases.ThemeSettingsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -33,6 +34,12 @@ class SettingsViewModel @Inject constructor(
                 _ui.update { it.copy(selectedAccent = a) }
             }
         }
+        // Observe font (new)
+        viewModelScope.launch {
+            themeSettingsUseCase.observeFont().collect { f ->
+                _ui.update { it.copy(selectedFont = f) }
+            }
+        }
     }
 
     fun onThemeSelected(theme: AppTheme) {
@@ -49,6 +56,16 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             _ui.update { it.copy(isSaving = true) }
             themeSettingsUseCase.setAccent(accent)
+            _ui.update { it.copy(isSaving = false) }
+        }
+    }
+
+    // New: Font handler
+    fun onFontSelected(font: AppFont) {
+        if (font == _ui.value.selectedFont) return
+        viewModelScope.launch {
+            _ui.update { it.copy(isSaving = true) }
+            themeSettingsUseCase.setFont(font)
             _ui.update { it.copy(isSaving = false) }
         }
     }

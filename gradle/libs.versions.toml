@@ -20,6 +20,7 @@ paging = "3.3.6"
 coilCompose = "2.7.0"
 room = "2.8.0"
 datastore = "1.1.7"
+chucker = "4.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }

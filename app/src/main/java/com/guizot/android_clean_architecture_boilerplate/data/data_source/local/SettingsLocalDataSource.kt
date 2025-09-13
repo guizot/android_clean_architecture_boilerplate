@@ -7,6 +7,7 @@ import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppTheme
 import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppAccent
+import com.guizot.android_clean_architecture_boilerplate.core.presentation.theme.AppFont
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +20,7 @@ class SettingsLocalDataSource(
     private object Keys {
         val THEME  = stringPreferencesKey("theme_key")
         val ACCENT = stringPreferencesKey("accent_key")
+        val FONT   = stringPreferencesKey("font_key")   // <-- new
     }
 
     // ---------------- THEME ----------------
@@ -74,6 +76,33 @@ class SettingsLocalDataSource(
                 AppAccent.AMBER.name  -> AppAccent.AMBER
                 AppAccent.RED.name    -> AppAccent.RED
                 else                  -> AppAccent.BLUE
+            }
+        }.first()
+
+    // ---------------- FONT (new) ----------------
+    fun observeFont(): Flow<AppFont> =
+        dataStore.data
+            .catch { if (it is IOException) emit(emptyPreferences()) else throw it }
+            .map { p ->
+                when (p[Keys.FONT]) {
+                    AppFont.SANS_SERIF.name -> AppFont.SANS_SERIF
+                    AppFont.SERIF.name      -> AppFont.SERIF
+                    AppFont.MONOSPACE.name  -> AppFont.MONOSPACE
+                    else                    -> AppFont.DEFAULT
+                }
+            }
+
+    suspend fun setFont(font: AppFont) {
+        dataStore.edit { it[Keys.FONT] = font.name }
+    }
+
+    suspend fun getFont(): AppFont =
+        dataStore.data.map { p ->
+            when (p[Keys.FONT]) {
+                AppFont.SANS_SERIF.name -> AppFont.SANS_SERIF
+                AppFont.SERIF.name      -> AppFont.SERIF
+                AppFont.MONOSPACE.name  -> AppFont.MONOSPACE
+                else                    -> AppFont.DEFAULT
             }
         }.first()
 }
