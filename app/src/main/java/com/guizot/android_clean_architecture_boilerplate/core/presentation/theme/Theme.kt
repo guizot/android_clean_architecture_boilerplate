@@ -38,7 +38,6 @@ fun AndroidCleanArchitectureBoilerplateTheme(
         else   -> lightColorScheme(primary = colorAccent.lightColor)
     }
 
-    // Map AppFont -> FontFamily
     val fontFamily = remember(appFont) {
         when (appFont) {
             AppFont.DEFAULT     -> FontFamily.Default
